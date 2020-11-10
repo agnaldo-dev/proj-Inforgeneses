@@ -1,35 +1,39 @@
 <?php namespace App\Controllers;
 
-use App\Models\UsuarioModel;
+use App\Models\CursoModel;
 
 
-class Usuario extends BaseController
+class Curso extends BaseController
 {
 
-    //retorna todos os usuarios 
+    //retorna todos os Cursos 
     public function index(){
 
-		$model = new UsuarioModel();
+		$model = new CursoModel();
+        
+        
+		$data['cursos'] = $model->orderBy('id', 'DESC')->findAll();
 
-		$data['usuarios'] = $model->orderBy('id', 'DESC')->findAll();
+        //var_dump('teste',$data);exit;
 
 		return $this->respond($data);
     }
 
-    // cria um novo usuario
+    // cria um novo Curso
     public function create() {
 
-        $model = new UsuarioModel();
+        $model = new CursoModel();
+
 
         $data = (array) $this->request->getJson();
-        		
+
 		$model->insert($data);
 		
 		$response = [
           'status'   => 201,
           'error'    => null,
           'messages' => [
-              'success' => 'Usuario criado com sucesso'
+              'success' => 'Curso criado com sucesso'
           ]
 	  ];
 	  
@@ -37,14 +41,14 @@ class Usuario extends BaseController
 	
 	}
 
-    //retorna um usuarios por id
+    //retorna um Cursos por id
     public function show($id = null){
 
-		$data = (new UsuarioModel())->where('id', $id)->first();
+		$data = (new CursoModel())->where('id', $id)->first();
 
 		if( !$data ){
 	   
-			return $this->failNotFound('Usuario não encontrado');
+			return $this->failNotFound('Curso não encontrado');
        
 		}
 		
@@ -52,20 +56,20 @@ class Usuario extends BaseController
         
     }
 
-    //autaliza um usuario por id
+    //autaliza um Curso por id
     public function update($id = null){
 
-        $model = new UsuarioModel();
+        $model = new CursoModel();
 
-        $usuario = $model->find($id);
+        $Curso = $model->find($id);
 
-        if( !$usuario ) {
+        if( !$Curso ) {
             
             return $this->respond([
                 'status'   => 401,
                 'error'    => null,
                 'messages' => [
-                    'success' => 'Usuario não encontrado'
+                    'success' => 'Curso não encontrado'
                 ]
             ]);
         }
@@ -79,31 +83,29 @@ class Usuario extends BaseController
           'status'   => 200,
           'error'    => null,
           'messages' => [
-              'success' => 'Usuario atualizado com sucesso'
+              'success' => 'Curso atualizado com sucesso'
           ]
 	  ]);
 	  
 	}
 
-    // delete usuarios por id
+    // delete Cursos por id
     public function delete($id = null){
 
-        $model = new UsuarioModel();
+        $model = new CursoModel();
 		
 		$data = $model->where('id', $id)->delete($id);
-		
-		if( !$data ){
+
+        if( !$data ){
 	   
-			return $this->failNotFound('Usuario não encontrado');
+			return $this->failNotFound('Curso não encontrado');
 		}    
-		
-//		$model->delete($id);
 		
 		$response = [
                 'status'   => 200,
                 'error'    => null,
                 'messages' => [
-                    'success' => 'Usuario deletado com sucesso'
+                    'success' => 'Curso deletado com sucesso'
                 ]
             ];
 		

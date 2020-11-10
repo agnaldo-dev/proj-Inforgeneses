@@ -35,6 +35,8 @@ $routes->get('/', 'Home::index');
 //rotaas do sistema proj-inforgeneses
 $routes->resource('usuario');
 
+$routes->resource('curso');
+
 /**
  * --------------------------------------------------------------------
  * Additional Routing

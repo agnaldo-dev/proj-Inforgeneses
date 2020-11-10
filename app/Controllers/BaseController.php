@@ -16,6 +16,9 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 
+use CodeIgniter\API\ResponseTrait;
+
+
 class BaseController extends Controller
 {
 
@@ -27,6 +30,8 @@ class BaseController extends Controller
 	 * @var array
 	 */
 	protected $helpers = [];
+
+	use ResponseTrait;
 
 	/**
 	 * Constructor.
