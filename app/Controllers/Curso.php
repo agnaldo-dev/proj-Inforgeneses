@@ -14,8 +14,6 @@ class Curso extends BaseController
         
 		$data['cursos'] = $model->orderBy('id', 'DESC')->findAll();
 
-        //var_dump('teste',$data);exit;
-
 		return $this->respond($data);
     }
 
