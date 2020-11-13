@@ -7,6 +7,6 @@ class PedidoModel extends Model
 {
     protected $table = 'pedidos';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['usuario_id','data_pedido'];
+    protected $allowedFields = ['usuario_id','data_pedido','estado'];
 
 }

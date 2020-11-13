@@ -33,9 +33,11 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Home::index');
 
 //rotaas do sistema proj-inforgeneses
-$routes->resource('usuario');
+$routes->resource('usuarios');
 
-$routes->resource('curso');
+$routes->resource('cursos');
+
+$routes->resource('pedidos');
 
 /**
  * --------------------------------------------------------------------

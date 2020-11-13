@@ -3,7 +3,7 @@
 use App\Models\CursoModel;
 
 
-class Curso extends BaseController
+class Cursos extends BaseController
 {
 
     //retorna todos os Cursos 

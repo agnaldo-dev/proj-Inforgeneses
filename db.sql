@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
 );
 
 insert into usuarios(nome,email,senha) values('ana','ana@sts.com','123456');
-
+w
 CREATE TABLE IF NOT EXISTS cursos (
      id INT NOT NULL AUTO_INCREMENT,
      nome VARCHAR(100) NULL,
@@ -37,10 +37,12 @@ CREATE TABLE IF NOT EXISTS pagamentos (
      PRIMARY KEY (id)
 );
 
+#DROP TABLE pedidos;
 CREATE TABLE IF NOT EXISTS pedidos (
      id INT NOT NULL AUTO_INCREMENT,
      usuario_id INT NULL,
      data_pedido DATE NULL,
+     estado VARCHAR(20)
 
      PRIMARY KEY (id)
 );

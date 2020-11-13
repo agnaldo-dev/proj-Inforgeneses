@@ -3,7 +3,7 @@
 use App\Models\UsuarioModel;
 
 
-class Usuario extends BaseController
+class Usuarios extends BaseController
 {
 
     //retorna todos os usuarios 
