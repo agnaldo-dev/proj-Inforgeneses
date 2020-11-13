@@ -62,24 +62,5 @@ class Pedidos extends BaseController
 		return $this->respond($data);
         
     }
-    
-    //finalizar pedido é fazer o pagamento
-    public function pagamento(){
-        
-        $data = (array) $this->request->getJson();
-        
-        $pagamentoId = (new PagamentoModel())->insert($data);
-		
-		$response = [
-          'status'   => 201,
-          'error'    => null,
-          'messages' => [
-              'success' => 'Pagamento criado com sucesso'
-          ],
-          "data" => $pagamentoId
-      ];        
-      
-      return $this->respondCreated($response);
-    }
 
 }
