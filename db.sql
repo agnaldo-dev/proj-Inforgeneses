@@ -38,11 +38,12 @@ CREATE TABLE IF NOT EXISTS pagamentos (
 );
 
 #DROP TABLE pedidos;
+
 CREATE TABLE IF NOT EXISTS pedidos (
      id INT NOT NULL AUTO_INCREMENT,
      usuario_id INT NULL,
      data_pedido DATE NULL,
-     estado VARCHAR(20)
+     estado VARCHAR(20),
 
      PRIMARY KEY (id)
 );

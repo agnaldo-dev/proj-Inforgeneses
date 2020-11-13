@@ -11,24 +11,24 @@ class Pedidos extends BaseController
 
     // cria um novo Pedido
     public function create() {
-//        protected $allowedFields = ['usuario_id','data_pedido','estado'];
-
-        $model = new PedidoModel();
 
         $data = $this->request->getJson();
 
-        $feitoPedido = $model->insert([
+        $pedidoId = (new PedidoModel())->insert([
             "usuario_id" => $data->usuario_id,
-            "data_pedido" => date("Y-m-d");
+            "data_pedido" => date("Y-m-d"),
+            "estado" => "feito"
         ]);
+
+        $pedidoCursoId = null;
         
-        if( $feitoPedido ){
-            
-            foreach($data['cursos'] as $id){
- 
-                $feitoPedido = (new PedidoCursoModel())->insert([
-                    'curso_id'=>$id,
-                    'pedido_id' => $feitoPedido->id
+        if( $pedidoId > 0 ){
+           
+            foreach($data->cursos as $curso){
+                
+                $pedidoCursoId = (new PedidoCursoModel())->insert([
+                    'curso_id'=> $curso->id,
+                    'pedido_id' => $pedidoId
                     ]);
  
             }
@@ -40,17 +40,18 @@ class Pedidos extends BaseController
           'error'    => null,
           'messages' => [
               'success' => 'Pedido criado com sucesso'
-          ]
+          ],
+          'data'=>$pedidoCursoId
 	  ];
 	  
       return $this->respondCreated($response);
 	
 	}
 
-    //retorna um Pedidos por id
+    //retorna todos curso do pedidos por id
     public function show($id = null){
 
-		$data = (new PedidoModel())->where('id', $id)->first();
+		$data = (new PedidoModel())->pedidosCursoPorId($id);
 
 		if( !$data ){
 	   
@@ -63,20 +64,22 @@ class Pedidos extends BaseController
     }
     
     //finalizar pedido é fazer o pagamento
-    public function finalizarPedido(){
+    public function pagamento(){
         
         $data = (array) $this->request->getJson();
         
-        (new PagamentoModel())->insert($data);
+        $pagamentoId = (new PagamentoModel())->insert($data);
 		
 		$response = [
           'status'   => 201,
           'error'    => null,
           'messages' => [
               'success' => 'Pagamento criado com sucesso'
-          ]
-	  ];        
-
+          ],
+          "data" => $pagamentoId
+      ];        
+      
+      return $this->respondCreated($response);
     }
 
 }
