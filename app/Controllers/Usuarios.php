@@ -21,16 +21,21 @@ class Usuarios extends BaseController
 
         $model = new UsuarioModel();
 
-        $data = (array) $this->request->getJson();
-        		
-		$model->insert($data);
+        $data = $this->request->getJson();
+
+        $data->senha = password_hash($data->senha, PASSWORD_BCRYPT);
+        
+        $data = (array) $data;
+        
+        $id = $model->insert($data);
 		
 		$response = [
           'status'   => 201,
           'error'    => null,
           'messages' => [
               'success' => 'Usuario criado com sucesso'
-          ]
+          ],
+          "data" => $id
 	  ];
 	  
       return $this->respondCreated($response);
