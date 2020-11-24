@@ -2,8 +2,6 @@
 
 use App\Models\PedidoModel;
 
-use App\Models\PagamentoModel;
-
 use App\Models\PedidoCursoModel;
 
 class Pedidos extends BaseController
@@ -14,7 +12,7 @@ class Pedidos extends BaseController
 
         $data = $this->request->getJson();
 
-        $pedidoId = (new PedidoModel())->insert([
+        $id = (new PedidoModel())->insert([
             "usuario_id" => $data->usuario_id,
             "data_pedido" => date("Y-m-d"),
             "estado" => "feito"
@@ -22,13 +20,13 @@ class Pedidos extends BaseController
 
         $pedidoCursoId = null;
         
-        if( $pedidoId > 0 ){
+        if( $id > 0 ){
            
             foreach($data->cursos as $curso){
                 
                 $pedidoCursoId = (new PedidoCursoModel())->insert([
                     'curso_id'=> $curso->id,
-                    'pedido_id' => $pedidoId
+                    'pedido_id' => $id
                     ]);
  
             }

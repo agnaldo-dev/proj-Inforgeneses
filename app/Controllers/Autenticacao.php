@@ -4,16 +4,9 @@ use App\Libraries\CreatorJwt;
 
 use App\Models\UsuarioModel;
 
-
 class Autenticacao extends BaseController
 {
  
-    public function __construct()
-    {
-        $this->objOfJwt = new CreatorJwt();
-        header('Content-Type: application/json');
-        
-    }
 
     public function login(){
 
@@ -42,31 +35,32 @@ class Autenticacao extends BaseController
         return $this->respond([
             'statusCode' => 200,
             'message'    => 'OK',
-            'Autorization'       => $token 
+            'Authenticate'=> $token
         ], 200);
 
     }
     
     public function loginToken($user)
     {
-       
+        $objOfJwt = new CreatorJwt();
         $tokenData['id'] = $user->id;
         $tokenData['nome'] = $user->nome;
         $tokenData['email'] = $user->email;
         $tokenData['timeStamp'] = Date('Y-m-d h:i:s');
 
-        $jwtToken = $this->objOfJwt->GenerateToken($tokenData);
+        $jwtToken = $objOfJwt->GenerateToken($tokenData);
 
         return json_encode(array('Token'=>$jwtToken));
     }
     
     public function GetTokenData()
     {
+       $objOfJwt = new CreatorJwt();
    
        $received_Token = $this->input->request_headers('Authorization');
        try
        {
-            $jwtData = $this->objOfJwt->DecodeToken($received_Token['Token']);
+            $jwtData = $objOfJwt->DecodeToken($received_Token['Token']);
 
            return $this->respond([
                'statusCode' => 200,
